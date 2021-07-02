@@ -11,7 +11,7 @@ public class GrabAndThrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Throwable"))
+        if (collision.collider.CompareTag("Throwable") && !shieldBody)
         {
             shieldBody = collision.collider.gameObject; 
             shieldBody.transform.parent = transform.GetChild(0);
@@ -27,11 +27,10 @@ public class GrabAndThrow : MonoBehaviour
         {
             if (shieldBody)
             {
-                shieldBody.transform.parent = null;
+                Vector3 _forceDir = new Vector3(swipeInput.Direction.normalized.x, 0, swipeInput.Direction.normalized.y);
                 shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
-                shieldRigidbody.isKinematic = false;
-                Vector3 _forceDir = new Vector3(swipeInput.Direction.x, 0, swipeInput.Direction.y);
                 shieldRigidbody.AddForce(_forceDir*force);
+                shieldBody.transform.parent = null;
             }
 
         }

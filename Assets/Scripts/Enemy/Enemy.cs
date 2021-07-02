@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public bool isDead;
+
+	
+
+	public bool isDead;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Throwable"))
