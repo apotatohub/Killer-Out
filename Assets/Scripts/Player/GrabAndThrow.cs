@@ -4,35 +4,59 @@ using UnityEngine;
 
 public class GrabAndThrow : MonoBehaviour
 {
-    public SwipeInput swipeInput;
+    PlayerMovement playerMovement;
+    SwipeInput swipeInput;
     public Rigidbody shieldRigidbody;
     public float force;
-    GameObject shieldBody;
+    public GameObject shieldBody;
+    public Transform shieldParent;
 
+
+    private void Start()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+        swipeInput = GetComponent<SwipeInput>();
+    }
+
+   
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Throwable") && !shieldBody)
+        if (collision.collider.CompareTag("Throwable"))
         {
-            shieldBody = collision.collider.gameObject; 
-            shieldBody.transform.parent = transform.GetChild(0);
-            shieldBody.transform.position = transform.GetChild(0).position;
-          
+            if (shieldBody)
+            {
+                return;
+            }
+            GameObject sBody = collision.collider.gameObject;
+
+            if (!sBody.GetComponent<Shield>().isGrabed)
+            {
+                shieldBody = sBody;
+                shieldBody.GetComponent<Shield>().isGrabed = true;
+                shieldBody.transform.parent = transform.GetChild(0);
+                shieldBody.transform.position = transform.GetChild(0).position;
+
+            }
+
         }
     }
 
 
     private void Update()
     {
+    
         if (Input.GetMouseButtonUp(0))
         {
-            if (shieldBody)
+            playerMovement.speed = 0;
+            if (!shieldBody)
             {
-                Vector3 _forceDir = new Vector3(swipeInput.Direction.normalized.x, 0, swipeInput.Direction.normalized.y);
-                shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
-                shieldRigidbody.AddForce(_forceDir*force);
-                shieldBody.transform.parent = null;
+                return;
             }
-
+            shieldBody.GetComponent<Shield>().isThrown = true;
+            shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
+            shieldRigidbody.AddForce(transform.forward*force,ForceMode.Force);
+            shieldBody.transform.parent = shieldParent;
+            shieldBody = null;
         }
     }
 }

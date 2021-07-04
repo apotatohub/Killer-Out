@@ -2,31 +2,26 @@
 public class SwipeInput : MonoBehaviour
 {
 
-    public Vector2 Direction;
-    Vector2 InitialPos;
-    public Animator CarChoosePanel;
+    public Vector2 direction;
+    Vector2 initialPos;
+    public Animator carChoosePanel;
     private void Start()
     {
         
-     //   CarChoosePanel = GameObject.FindGameObjectWithTag("Car Panel").GetComponent<Animator>();
+    
     }
     void Update()
     {
 
         if (Input.GetMouseButtonDown(0))
         {
-            InitialPos = Input.mousePosition;
-
+            initialPos = Input.mousePosition;
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButton(0))
         {
-            InitialPos = Vector2.zero;
+            direction = ((Vector2)(Input.mousePosition) - initialPos);
+           
         }
-        if (Input.GetMouseButton(0))
-        {
-            Direction = ((Vector2)(Input.mousePosition) - InitialPos);
-        }
-        else
-            Direction = Vector3.zero;
+  
     }
 }
