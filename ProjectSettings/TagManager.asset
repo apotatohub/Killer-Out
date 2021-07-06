@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstacle
-  - Throwable
   - Enemy
+  - Shield
   layers:
   - Default
   - TransparentFX

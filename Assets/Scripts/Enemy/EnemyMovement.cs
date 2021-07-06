@@ -8,12 +8,15 @@ public class EnemyMovement : MonoBehaviour
     public Enemy enemy;
     public Transform target;
     public bool isDeafult;
-    public Vector3 position1, position2;
+    Vector3 position1;
+    public Vector3 position2;
     public bool isFirstPos, isSecondPos;
     NavMeshAgent navmeshAgent;
+
      
     void Start()
     {
+        position1 = transform.position;
         enemy = GetComponent<Enemy>();
         navmeshAgent = GetComponent<NavMeshAgent>();
         isDeafult = isFirstPos = true;
@@ -57,6 +60,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Chase(Transform _target)
     {
+        transform.LookAt(target, transform.up);
         navmeshAgent.stoppingDistance = 4;
         navmeshAgent.speed = 3.5f;
         navmeshAgent.SetDestination(target.position);

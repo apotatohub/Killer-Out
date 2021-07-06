@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrabAndThrow : MonoBehaviour
 {
@@ -10,10 +11,11 @@ public class GrabAndThrow : MonoBehaviour
     public float force;
     public GameObject shieldBody;
     public Transform shieldParent;
-
+    public Slider shieldHealthBar;
 
     private void Start()
     {
+        shieldHealthBar.transform.parent.gameObject.SetActive(false);
         playerMovement = GetComponent<PlayerMovement>();
         swipeInput = GetComponent<SwipeInput>();
     }
@@ -21,7 +23,7 @@ public class GrabAndThrow : MonoBehaviour
    
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Throwable"))
+        if (collision.collider.CompareTag("Shield"))
         {
             if (shieldBody)
             {
@@ -31,7 +33,9 @@ public class GrabAndThrow : MonoBehaviour
 
             if (!sBody.GetComponent<Shield>().isGrabed)
             {
+                shieldHealthBar.transform.parent.gameObject.SetActive(true);
                 shieldBody = sBody;
+                shieldBody.GetComponent<ShieldHealth>().OnPickedShield(shieldHealthBar);               
                 shieldBody.GetComponent<Shield>().isGrabed = true;
                 shieldBody.transform.parent = transform.GetChild(0);
                 shieldBody.transform.position = transform.GetChild(0).position;
@@ -52,6 +56,7 @@ public class GrabAndThrow : MonoBehaviour
             {
                 return;
             }
+            shieldHealthBar.transform.parent.gameObject.SetActive(false);
             shieldBody.GetComponent<Shield>().isThrown = true;
             shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
             shieldRigidbody.AddForce(transform.forward*force,ForceMode.Force);

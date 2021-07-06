@@ -13,13 +13,15 @@ public class PlayerDetection : MonoBehaviour
     public LayerMask obstacleMask;
 	[HideInInspector]
 	public Transform visibleTarget;
-	public bool isDetectedOnce;
+	public bool isDetected;
 
 	public bool isSniper, isGunman;
-	float waitTime = 1;
+
 
 	private void Start()
     {
+	
+
 		enemyMovement = GetComponent<EnemyMovement>();
 		if (isSniper)
 		{
@@ -37,7 +39,7 @@ public class PlayerDetection : MonoBehaviour
 
 		Debug.DrawRay(transform.position, transform.forward * 10, Color.white);
 
-        if (!isDetectedOnce)
+        if (!isDetected)
         {
 		
 			FindPlayer(viewRadius, viewAngle);
@@ -45,16 +47,7 @@ public class PlayerDetection : MonoBehaviour
         else
         {
 			Debug.DrawRay(transform.position, useDir * disToTarget, Color.red);
-			if (waitTime<=0)
-            {
-				Shoot();
-				waitTime = 1;
-			}
-            else
-            {
-				waitTime -= Time.deltaTime;
-            }
-		
+
         }
         if (target)
         {
@@ -64,7 +57,7 @@ public class PlayerDetection : MonoBehaviour
 		if (disToTarget>7f)
         {
 			enemyMovement.isDeafult = true;
-			isDetectedOnce = false;
+			isDetected = false;
         }
 
 	}
@@ -98,23 +91,9 @@ public class PlayerDetection : MonoBehaviour
 			{
 				
 				enemyMovement.isDeafult = false;
-				isDetectedOnce = true;
+				isDetected = true;
 			
 			}
 		}
-	}
-    private void Shoot()
-    {
-		Debug.Log("Shoot");
-    }
-
-
-	public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
-	{
-		if (!angleIsGlobal)
-		{
-			angleInDegrees += transform.eulerAngles.y;
-		}
-		return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
 	}
 }
