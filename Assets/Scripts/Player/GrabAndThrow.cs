@@ -56,8 +56,8 @@ public class GrabAndThrow : MonoBehaviour
             {
                 return;
             }
-            shieldHealthBar.transform.parent.gameObject.SetActive(false);
             shieldBody.GetComponent<Shield>().isThrown = true;
+            shieldHealthBar.transform.parent.gameObject.SetActive(false);
             shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
             shieldRigidbody.AddForce(transform.forward*force,ForceMode.Force);
             shieldBody.transform.parent = shieldParent;

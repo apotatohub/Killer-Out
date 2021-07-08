@@ -8,20 +8,20 @@ public class Shield : MonoBehaviour
     public bool isThrown;
     public bool isDamaged;
 
-    float waitTime = 3;
+  // float waitTime = 1;
     private void Update()
     {
-        if (isThrown && !isDamaged)
-        {
-            if (waitTime<=0)
-            {
-                isDamaged = true;
-            }
-            else
-            {
-                waitTime -= Time.deltaTime;
-            }
-        }
+        //if (isThrown && !isDamaged)
+        //{
+        //    if (waitTime<=0)
+        //    {
+        //        isDamaged = true;
+        //    }
+        //    else
+        //    {
+        //        waitTime -= Time.deltaTime;
+        //    }
+        //}
     }
     public void RemoveParent()
     {

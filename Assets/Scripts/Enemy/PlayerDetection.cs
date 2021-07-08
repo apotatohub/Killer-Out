@@ -11,13 +11,13 @@ public class PlayerDetection : MonoBehaviour
     public float viewAngle;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-	[HideInInspector]
-	public Transform visibleTarget;
 	public bool isDetected;
 
-	public bool isSniper, isGunman;
-
-
+	public bool isSniper, isAsaulter;
+	public Transform target;
+	public float disToTarget;
+	Vector3 dirToTarget;
+	Vector3 useDir;
 	private void Start()
     {
 	
@@ -28,7 +28,7 @@ public class PlayerDetection : MonoBehaviour
 			viewAngle = 35;
 			viewRadius = 7;
 		}
-		else if (isGunman)
+		else if (isAsaulter)
 		{
 			viewAngle = 50;
 			viewRadius = 5;
@@ -62,7 +62,7 @@ public class PlayerDetection : MonoBehaviour
 
 	}
 
-	public Transform target;
+
 	void FindPlayer(float _viewRadius, float _viewAngle)
 	{
 		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, _viewRadius, targetMask);
@@ -76,9 +76,6 @@ public class PlayerDetection : MonoBehaviour
 		}
 	}
 
-	public float disToTarget;
-	Vector3 dirToTarget;
-	Vector3 useDir;
 	public void AfterDetectionAction(Transform target, float _viewAngle)
     {
 		dirToTarget = (target.position - transform.position).normalized;
@@ -94,6 +91,11 @@ public class PlayerDetection : MonoBehaviour
 				isDetected = true;
 			
 			}
+		}
+        else if (disToTarget<=2)
+        {
+			enemyMovement.isDeafult = false;
+			isDetected = true;
 		}
 	}
 }

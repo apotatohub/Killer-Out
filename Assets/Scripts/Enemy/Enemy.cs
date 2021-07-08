@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
  
     public float BPS = 3;
     float bulletShootTime;
+    float minimumVelocity=15;
 
     private void Start()
     {
@@ -34,19 +35,25 @@ public class Enemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("Shield"))
         {
-            if (collision.collider.GetComponent<Shield>().isThrown && !collision.collider.GetComponent<Shield>().isDamaged && !isDead)
+            if (!collision.collider.GetComponent<Shield>().isDamaged && !isDead && collision.collider.GetComponent<Shield>().isThrown)
             {
-                isDead = true;
-                enemyCountManager.SetEnemyCount();
-                navAgent.enabled=false;
-                enemyMovement.enabled = false;
-                playerDetection.enabled = false;
-                if (!GetComponent<Rigidbody>())
+                if (collision.relativeVelocity.magnitude >= minimumVelocity || true)
                 {
-                    gameObject.AddComponent<Rigidbody>();
+                    if (!GetComponent<Rigidbody>())
+                    {
+                        gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*10);
+                    }
+
+                    isDead = true;
+                    collision.collider.GetComponent<Shield>().isDamaged = true;
+                    enemyCountManager.SetEnemyCount();
+                    navAgent.enabled = false;
+                    enemyMovement.enabled = false;
+                    playerDetection.enabled = false;                
+                    GetComponent<MeshRenderer>().material.color = Color.gray;
+
                 }
-                GetComponent<MeshRenderer>().material.color = Color.gray;
-              
+
             }
 
         }
