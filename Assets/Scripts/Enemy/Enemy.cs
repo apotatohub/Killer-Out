@@ -49,6 +49,7 @@ public class Enemy : MonoBehaviour
                     enemyCountManager.SetEnemyCount();
                     navAgent.enabled = false;
                     enemyMovement.enabled = false;
+                    playerDetection.viewMeshFilter.gameObject.SetActive(false);
                     playerDetection.enabled = false;                
                     GetComponent<MeshRenderer>().material.color = Color.gray;
 
