@@ -23,6 +23,7 @@ public class PlayerDetection : MonoBehaviour
 	public float edgeDstThreshold;
 
 	public MeshFilter viewMeshFilter;
+	public MeshRenderer viewAngleMeshRenderer;
 	Mesh viewMesh;
 
 
@@ -32,7 +33,6 @@ public class PlayerDetection : MonoBehaviour
 		viewMesh = new Mesh();
 		viewMesh.name = "View Mesh";
 		viewMeshFilter.mesh = viewMesh;
-
 
 		enemyMovement = GetComponent<EnemyMovement>();
 		if (isSniper)
@@ -49,16 +49,15 @@ public class PlayerDetection : MonoBehaviour
     private void Update()
 	{
 
-		
-
         if (!isDetected)
         {
 			FindPlayer(viewRadius, viewAngle);
+			viewAngleMeshRenderer.material.color = Color.green;
 		}
         else
         {
-			
-        }
+			viewAngleMeshRenderer.material.color = Color.red;
+		}
         if (target)
         {
 			useDir = (target.position - transform.position).normalized;
@@ -101,7 +100,7 @@ public class PlayerDetection : MonoBehaviour
 			
 			}
 		}
-        else if (disToTarget<=2)
+        else if (disToTarget<=3)
         {
 			enemyMovement.isDeafult = false;
 			isDetected = true;
