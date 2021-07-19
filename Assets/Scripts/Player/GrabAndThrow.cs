@@ -5,19 +5,16 @@ using UnityEngine.UI;
 
 public class GrabAndThrow : MonoBehaviour
 {
-    PlayerMovement playerMovement;
-    SwipeInput swipeInput;
     public Rigidbody shieldRigidbody;
     public float force;
     public GameObject shieldBody;
     public Transform shieldParent;
     public Slider shieldHealthBar;
+    public Animator anim;
 
     private void Start()
     {
         shieldHealthBar.transform.parent.gameObject.SetActive(false);
-        playerMovement = GetComponent<PlayerMovement>();
-        swipeInput = GetComponent<SwipeInput>();
     }
 
    
@@ -33,6 +30,7 @@ public class GrabAndThrow : MonoBehaviour
 
             if (!sBody.GetComponent<Shield>().isGrabed)
             {
+                anim.SetLayerWeight(1, 1);
                 shieldHealthBar.transform.parent.gameObject.SetActive(true);
                 shieldBody = sBody;
                 shieldBody.GetComponent<ShieldHealth>().OnPickedShield(shieldHealthBar);               
@@ -51,11 +49,11 @@ public class GrabAndThrow : MonoBehaviour
     
         if (Input.GetMouseButtonUp(0))
         {
-            playerMovement.speed = 0;
             if (!shieldBody)
             {
                 return;
             }
+            anim.SetLayerWeight(1, 0);
             shieldBody.GetComponent<Shield>().isThrown = true;
             shieldHealthBar.transform.parent.gameObject.SetActive(false);
             shieldRigidbody = shieldBody.AddComponent<Rigidbody>();

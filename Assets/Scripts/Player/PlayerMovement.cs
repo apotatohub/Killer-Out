@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 
-[RequireComponent(typeof(Rigidbody),typeof(SwipeInput))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
 
@@ -11,8 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float editorSpeed;
     [SerializeField] Rigidbody rb;
     [SerializeField] float RotationSpeed;
-    SwipeInput SwipeInput;
-    public Vector3 direction;
+    [SerializeField] Animator anim;
 
     //Joystick
     public Joystick joystick;
@@ -20,10 +19,12 @@ public class PlayerMovement : MonoBehaviour
     public Text useJoystick;
 
 
+    //Swipe Input
+    public Vector2 direction;
+    Vector2 initialPos;
+
     private void Awake()
     {
-
-        SwipeInput = GetComponent<SwipeInput>();
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
@@ -50,6 +51,13 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = editorSpeed;
         }
+        
+        if (Input.GetMouseButtonUp(0))
+        {
+            rb.velocity = Vector3.zero;
+            direction = Vector2.zero;
+         
+        }
 
         if (isJoystick)
         {
@@ -59,33 +67,39 @@ public class PlayerMovement : MonoBehaviour
         {
             SwipeMovement();
         }
-      
-    }
 
+    }
+    private void LateUpdate()
+    {
+        anim.SetFloat("IdletoRun", direction.normalized.magnitude);
+    }
     public void SwipeMovement()
     {
-        direction = SwipeInput.direction.normalized;
-      
-            if (SwipeInput.direction.magnitude >= 30f)
-            {
+        if (Input.GetMouseButtonDown(0))
+        {
+            initialPos = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            direction = ((Vector2)(Input.mousePosition) - initialPos);
+        }
+
+        if (direction.magnitude >= 10f)
+        {
+             
                 Vector3 _direction = new Vector3(direction.x, 0, direction.y);
-                if (_direction.magnitude != 0)
-                {
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
-                    rb.velocity = transform.forward * speed * 10 * Time.fixedDeltaTime;
-
-                }
-
-            }
-
-       
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
+                rb.velocity = transform.forward * speed * 10 * Time.fixedDeltaTime;
+            
+        }
     }
 
     public void JoystickMovement()
     {
        
-            direction = joystick.Direction;
-            Vector3 _direction = new Vector3(direction.x, 0, direction.y);
+            Vector3 joystickDirection = joystick.Direction;
+            Vector3 _direction = new Vector3(joystickDirection.x, 0, joystickDirection.y);
+            direction = joystickDirection;
             if (_direction.magnitude != 0)
             {
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);

@@ -16,7 +16,8 @@ public class PlayerDetection : MonoBehaviour
 	public Transform target;
 	public float disToTarget;
 	Vector3 dirToTarget;
-	Vector3 useDir;
+
+	[SerializeField] Animator anim;
 
 	public float meshResolution;
 	public int edgeResolveIterations;
@@ -53,14 +54,16 @@ public class PlayerDetection : MonoBehaviour
         {
 			FindPlayer(viewRadius, viewAngle);
 			viewAngleMeshRenderer.material.color = Color.green;
+			anim.SetFloat("Chase", 0);
 		}
         else
         {
+			anim.SetFloat("Chase", 1);
 			viewAngleMeshRenderer.material.color = Color.red;
 		}
         if (target)
         {
-			useDir = (target.position - transform.position).normalized;
+
 			disToTarget = Vector3.Distance(target.transform.position, transform.position);
 		}		
 		if (disToTarget>7f)

@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
                     enemyMovement.enabled = false;
                     playerDetection.viewMeshFilter.gameObject.SetActive(false);
                     playerDetection.enabled = false;                
-                    GetComponent<MeshRenderer>().material.color = Color.gray;
+                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.gray;
 
                 }
 
