@@ -30,7 +30,7 @@ public class GrabAndThrow : MonoBehaviour
 
             if (!sBody.GetComponent<Shield>().isGrabed)
             {
-                anim.SetLayerWeight(1, 1);
+                anim.SetBool("isGrabing", true);
                 shieldHealthBar.transform.parent.gameObject.SetActive(true);
                 shieldBody = sBody;
                 shieldBody.GetComponent<ShieldHealth>().OnPickedShield(shieldHealthBar);               
@@ -53,11 +53,12 @@ public class GrabAndThrow : MonoBehaviour
             {
                 return;
             }
-            anim.SetLayerWeight(1, 0);
+            anim.SetBool("isGrabing", false);
             shieldBody.GetComponent<Shield>().isThrown = true;
             shieldHealthBar.transform.parent.gameObject.SetActive(false);
             shieldRigidbody = shieldBody.AddComponent<Rigidbody>();
             shieldRigidbody.AddForce(transform.forward*force,ForceMode.Force);
+            shieldRigidbody.angularDrag = 1;
             shieldBody.transform.parent = shieldParent;
             shieldBody = null;
         }

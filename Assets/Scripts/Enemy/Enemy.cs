@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public Transform shootingPos;
     public NavMeshAgent navAgent;
     public EnemyCountManager enemyCountManager;
- 
+    public Animator anim;
     public float BPS = 3;
     float bulletShootTime;
     float minimumVelocity=15;
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
                 {
                     if (!GetComponent<Rigidbody>())
                     {
-                        gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*10);
+                        gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*30);
                     }
 
                     isDead = true;
@@ -50,7 +50,9 @@ public class Enemy : MonoBehaviour
                     navAgent.enabled = false;
                     enemyMovement.enabled = false;
                     playerDetection.viewMeshFilter.gameObject.SetActive(false);
-                    playerDetection.enabled = false;                
+                    playerDetection.enabled = false;
+                    anim.enabled = false;
+                    //Ragdol Enabling Here                  
                     GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.gray;
 
                 }

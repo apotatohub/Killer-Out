@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Shield
   - Ground
+  - Enemy Count Text
   layers:
   - Default
   - TransparentFX

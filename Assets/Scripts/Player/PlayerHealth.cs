@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         if(currentHealth<=0)
         {
             //Play Death Animation
+            GameManager.Instance.GameOver();
             Debug.Log("Player is done playing!!!");
         }
     }

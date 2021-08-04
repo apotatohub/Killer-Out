@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -14,9 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Animator anim;
 
     //Joystick
-    public Joystick joystick;
-    public bool isJoystick;
-    public Text useJoystick;
+    //public Joystick joystick;
+    //public bool isJoystick;
+    //public Text useJoystick;
 
 
     //Swipe Input
@@ -34,19 +34,23 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
 
-        if (isJoystick)
-        {
-            useJoystick.text = "Use Swipe";
-            joystick.transform.parent.gameObject.SetActive(true);
-        }
-        else
-        {
-            useJoystick.text = "Use Joystick";
-            joystick.transform.parent.gameObject.SetActive(false);
-        }
+        //if (isJoystick)
+        //{
+        //    useJoystick.text = "Use Swipe";
+        //    joystick.transform.parent.gameObject.SetActive(true);
+        //}
+        //else
+        //{
+        //    useJoystick.text = "Use Joystick";
+        //    joystick.transform.parent.gameObject.SetActive(false);
+        //}
     }
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             speed = editorSpeed;
@@ -56,23 +60,20 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             direction = Vector2.zero;
-         
+            anim.SetBool("isRunning", false);
         }
 
-        if (isJoystick)
-        {
-            JoystickMovement();
-        }
-        else
-        {
-            SwipeMovement();
-        }
-
+        //if (isJoystick)
+        //{
+        //    JoystickMovement();
+        //}
+        //else
+        //{
+        //    SwipeMovement();
+        //}
+        SwipeMovement();
     }
-    private void LateUpdate()
-    {
-        anim.SetFloat("IdletoRun", direction.normalized.magnitude);
-    }
+   
     public void SwipeMovement()
     {
         if (Input.GetMouseButtonDown(0))
@@ -82,46 +83,48 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             direction = ((Vector2)(Input.mousePosition) - initialPos);
+            anim.SetBool("isRunning", true);
         }
 
         if (direction.magnitude >= 10f)
         {
-             
+                
                 Vector3 _direction = new Vector3(direction.x, 0, direction.y);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
                 rb.velocity = transform.forward * speed * 10 * Time.fixedDeltaTime;
-            
+               
+               
         }
     }
 
-    public void JoystickMovement()
-    {
+    //public void JoystickMovement()
+    //{
        
-            Vector3 joystickDirection = joystick.Direction;
-            Vector3 _direction = new Vector3(joystickDirection.x, 0, joystickDirection.y);
-            direction = joystickDirection;
-            if (_direction.magnitude != 0)
-            {
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
-                rb.velocity = _direction * speed * 10 * Time.fixedDeltaTime;
-            }
+    //        Vector3 joystickDirection = joystick.Direction;
+    //        Vector3 _direction = new Vector3(joystickDirection.x, 0, joystickDirection.y);
+    //        direction = joystickDirection;
+    //        if (_direction.magnitude != 0)
+    //        {
+    //            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
+    //            rb.velocity = _direction * speed * 10 * Time.fixedDeltaTime;
+    //        }
   
-    }
+    //}
 
 
-    public void SwitchController()
-    {
-        if (isJoystick)
-        {
-            isJoystick = false;
-            useJoystick.text = "Use Joystick";
-            joystick.transform.parent.gameObject.SetActive(false);
-        }
-        else
-        {
-            isJoystick = true;
-            useJoystick.text = "Use Swipe";
-            joystick.transform.parent.gameObject.SetActive(true);
-        }
-    }
+    //public void SwitchController()
+    //{
+    //    if (isJoystick)
+    //    {
+    //        isJoystick = false;
+    //        useJoystick.text = "Use Joystick";
+    //        joystick.transform.parent.gameObject.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        isJoystick = true;
+    //        useJoystick.text = "Use Swipe";
+    //        joystick.transform.parent.gameObject.SetActive(true);
+    //    }
+    //}
 }
