@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public float BPS = 3;
     float bulletShootTime;
     float minimumVelocity=15;
+    [SerializeField] bool stopShooting;
 
     private void Start()
     {
@@ -84,6 +85,10 @@ public class Enemy : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bulletPrefabs,shootingPos.position,Quaternion.identity).GetComponent<Bullet>().direction = shootingPos.forward;
+        if (!stopShooting)
+        {
+            Instantiate(bulletPrefabs, shootingPos.position, Quaternion.identity).GetComponent<Bullet>().direction = shootingPos.forward;
+        }
+      
     }
 }
