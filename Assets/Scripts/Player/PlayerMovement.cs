@@ -13,10 +13,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float RotationSpeed;
     [SerializeField] Animator anim;
 
-    //Joystick
-    //public Joystick joystick;
-    //public bool isJoystick;
-    //public Text useJoystick;
+
+    public Joystick joystick;
+
 
 
     //Swipe Input
@@ -47,10 +46,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
         if (Input.GetMouseButtonDown(0))
         {
             speed = editorSpeed;
@@ -71,45 +70,55 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    SwipeMovement();
         //}
-        SwipeMovement();
+        JoystickMovement();
     }
    
-    public void SwipeMovement()
+    //public void SwipeMovement()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        initialPos = Input.mousePosition;
+    //    }
+    //    else if (Input.GetMouseButton(0))
+    //    {
+    //        direction = ((Vector2)(Input.mousePosition) - initialPos);
+    //        anim.SetBool("isRunning", true);
+    //    }
+
+    //    if (direction.magnitude >= 10f)
+    //    {
+                
+    //            Vector3 _direction = new Vector3(direction.x, 0, direction.y);
+    //            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
+    //            rb.velocity = transform.forward * speed * 10 * Time.fixedDeltaTime;
+               
+               
+    //    }
+    //}
+
+    public void JoystickMovement()
     {
+
+
         if (Input.GetMouseButtonDown(0))
         {
             initialPos = Input.mousePosition;
         }
         else if (Input.GetMouseButton(0))
         {
-            direction = ((Vector2)(Input.mousePosition) - initialPos);
+           
             anim.SetBool("isRunning", true);
         }
-
-        if (direction.magnitude >= 10f)
+        Vector3 joystickDirection = joystick.Direction;
+        Vector3 _direction = new Vector3(joystickDirection.x, 0, joystickDirection.y);
+        direction = joystickDirection;
+        if (_direction.magnitude != 0)
         {
-                
-                Vector3 _direction = new Vector3(direction.x, 0, direction.y);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
-                rb.velocity = transform.forward * speed * 10 * Time.fixedDeltaTime;
-               
-               
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
+            rb.velocity = _direction * speed * 10 * Time.fixedDeltaTime;
         }
-    }
 
-    //public void JoystickMovement()
-    //{
-       
-    //        Vector3 joystickDirection = joystick.Direction;
-    //        Vector3 _direction = new Vector3(joystickDirection.x, 0, joystickDirection.y);
-    //        direction = joystickDirection;
-    //        if (_direction.magnitude != 0)
-    //        {
-    //            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(_direction), RotationSpeed * Time.deltaTime);
-    //            rb.velocity = _direction * speed * 10 * Time.fixedDeltaTime;
-    //        }
-  
-    //}
+    }
 
 
     //public void SwitchController()
