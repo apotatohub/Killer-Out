@@ -397,13 +397,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215608038389591971}
-  m_LocalRotation: {x: -0.5299864, y: 0.45697266, z: 0.46716702, w: 0.54041225}
-  m_LocalPosition: {x: -0.056133956, y: 0.14623165, z: 0.01907732}
+  m_LocalRotation: {x: -0.55022436, y: 0.62454706, z: -0.28326088, w: 0.47640064}
+  m_LocalPosition: {x: 0.142, y: 0.137, z: 0.079}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2844059196483595247}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -9.813001, y: 113.038, z: -76.26}
 --- !u!33 &1887893370148417869
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2629004014102806894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0.053}
+  m_LocalPosition: {x: 0, y: 0.37, z: 0.053}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2591434858017612252}
@@ -1019,10 +1019,10 @@ GameObject:
   - component: {fileID: 2591434858017612252}
   - component: {fileID: 2935626679756012386}
   - component: {fileID: 2935626679756012387}
-  - component: {fileID: 2935626679756012388}
   - component: {fileID: 2935626679756012389}
   - component: {fileID: 2935626679756012385}
   - component: {fileID: 6910602797861067624}
+  - component: {fileID: 745847590}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1060,11 +1060,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 2935626679756012387}
-  target: {fileID: 0}
+  target: {fileID: 2591434857899342669}
   isDeafult: 1
-  position2: {x: -17.67, y: 0.545, z: 2.24}
+  position2: {x: -24.81, y: 0.545, z: -14.83}
   isFirstPos: 1
   isSecondPos: 0
+  anim: {fileID: 8437085508317372727}
 --- !u!114 &2935626679756012387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,9 +1078,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4a25667ab15204184c6d59d2258527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSmartToMove: 1
+  isSmartToDetect: 1
+  isSmartToShoot: 1
   isDead: 0
   enemyMovement: {fileID: 2935626679756012386}
-  playerDetection: {fileID: 2935626679756012388}
+  playerDetection: {fileID: 745847590}
   bulletPrefabs: {fileID: 1339428059757125655, guid: 3ffdbb06a40702b49b161ba4ac0ba793,
     type: 3}
   shootingPos: {fileID: 2629004013533606459}
@@ -1087,37 +1091,6 @@ MonoBehaviour:
   enemyCountManager: {fileID: 0}
   anim: {fileID: 8437085508317372727}
   BPS: 3
---- !u!114 &2935626679756012388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2935626679756012390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79e049026f7387b41abae2f311e3545b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 8.95
-  viewAngle: 81
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  isDetected: 0
-  isSniper: 0
-  isAsaulter: 1
-  target: {fileID: 0}
-  disToTarget: 0
-  anim: {fileID: 8437085508317372727}
-  meshResolution: 1
-  edgeResolveIterations: 0
-  edgeDstThreshold: 0
-  viewMeshFilter: {fileID: 2629004014102806891}
-  viewAngleMeshRenderer: {fileID: 2629004014102806892}
 --- !u!195 &2935626679756012389
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1128,7 +1101,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.23
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -1170,6 +1143,36 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &745847590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935626679756012390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e049026f7387b41abae2f311e3545b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 6.19
+  viewAngle: 62
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  isDetected: 0
+  isSniper: 0
+  isAsaulter: 1
+  target: {fileID: 0}
+  disToTarget: 0
+  meshResolution: 1
+  edgeResolveIterations: 0
+  edgeDstThreshold: 0
+  viewMeshFilter: {fileID: 2629004014102806891}
+  viewAngleMeshRenderer: {fileID: 2629004014102806892}
 --- !u!1 &2935626679908295159
 GameObject:
   m_ObjectHideFlags: 0

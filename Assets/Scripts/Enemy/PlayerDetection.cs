@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerDetection : MonoBehaviour
 {
+	bool isSmartToDetect;
 	EnemyMovement enemyMovement;
     public float viewRadius;
     [Range(0, 360)]
@@ -16,9 +17,6 @@ public class PlayerDetection : MonoBehaviour
 	public Transform target;
 	public float disToTarget;
 	Vector3 dirToTarget;
-
-	[SerializeField] Animator anim;
-
 	public float meshResolution;
 	public int edgeResolveIterations;
 	public float edgeDstThreshold;
@@ -30,7 +28,7 @@ public class PlayerDetection : MonoBehaviour
 
 	private void Start()
     {
-
+		isSmartToDetect = GetComponent<Enemy>().isSmartToDetect;
 		viewMesh = new Mesh();
 		viewMesh.name = "View Mesh";
 		viewMeshFilter.mesh = viewMesh;
@@ -49,16 +47,19 @@ public class PlayerDetection : MonoBehaviour
 	}
     private void Update()
 	{
-
+        if (!isSmartToDetect)
+        {
+			return;
+        }
         if (!isDetected)
         {
 			FindPlayer(viewRadius, viewAngle);
 			viewAngleMeshRenderer.material.color = Color.green;
-			anim.SetFloat("Chase", 0);
+			
 		}
         else
         {
-			anim.SetFloat("Chase", 1);
+			
 			viewAngleMeshRenderer.material.color = Color.red;
 		}
         if (target)
@@ -103,11 +104,11 @@ public class PlayerDetection : MonoBehaviour
 			
 			}
 		}
-        else if (disToTarget<=3)
-        {
-			enemyMovement.isDeafult = false;
-			isDetected = true;
-		}
+  //      else if (disToTarget<=3)
+  //      {
+		//	enemyMovement.isDeafult = false;
+		//	isDetected = true;
+		//}
 
 
 	}

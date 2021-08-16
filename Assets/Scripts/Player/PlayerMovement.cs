@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float RotationSpeed;
     [SerializeField] Animator anim;
 
-
+    
     public Joystick joystick;
 
 
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             speed = editorSpeed;
+            
         }
         
         if (Input.GetMouseButtonUp(0))
@@ -99,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     public void JoystickMovement()
     {
 
-
+     
         if (Input.GetMouseButtonDown(0))
         {
             initialPos = Input.mousePosition;

@@ -11,7 +11,7 @@ public class GrabAndThrow : MonoBehaviour
     public Transform shieldParent;
     public Slider shieldHealthBar;
     public Animator anim;
-
+    public GameObject dottedLine;
     private void Start()
     {
         shieldHealthBar.transform.parent.gameObject.SetActive(false);
@@ -30,6 +30,7 @@ public class GrabAndThrow : MonoBehaviour
 
             if (!sBody.GetComponent<Shield>().isGrabed)
             {
+                dottedLine.SetActive(true);
                 anim.SetBool("isGrabing", true);
                 shieldHealthBar.transform.parent.gameObject.SetActive(true);
                 shieldBody = sBody;
@@ -53,6 +54,7 @@ public class GrabAndThrow : MonoBehaviour
             {
                 return;
             }
+            dottedLine.SetActive(false);
             anim.SetBool("isGrabing", false);
             shieldBody.GetComponent<Shield>().isThrown = true;
             shieldHealthBar.transform.parent.gameObject.SetActive(false);

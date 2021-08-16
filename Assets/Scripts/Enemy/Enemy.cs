@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using EZCameraShake;
 public class Enemy : MonoBehaviour
 {
-
-	public bool isDead;
+    public bool isSmartToMove, isSmartToDetect, isSmartToShoot;
+    public bool isDead;
     public EnemyMovement enemyMovement;
     public PlayerDetection playerDetection;
     public GameObject bulletPrefabs;
@@ -18,7 +18,6 @@ public class Enemy : MonoBehaviour
     public float BPS = 3;
     float bulletShootTime;
     float minimumVelocity=15;
-    [SerializeField] bool stopShooting;
 
     private void Start()
     {
@@ -28,9 +27,10 @@ public class Enemy : MonoBehaviour
         }
         navAgent = GetComponent<NavMeshAgent>();
         enemyMovement = GetComponent<EnemyMovement>();
-        playerDetection = GetComponent<PlayerDetection>();
+        //playerDetection = GetComponent<PlayerDetection>();
         //BPS = PlayerPrefs.GetFloat("BPS");
         bulletShootTime = 1 / BPS;
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
                     {
                         gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*30);
                     }
-
+                    CameraShaker.Instance.ShakeOnce(4, 2, 0.1f, 1);
                     isDead = true;
                     collision.collider.GetComponent<Shield>().isDamaged = true;
                     enemyCountManager.SetEnemyCount();
@@ -64,8 +64,10 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        if (!isDead)
+        if (isDead)
         {
+            return;
+        }
             if (playerDetection.isDetected)
             {
                 if (bulletShootTime <= 0)
@@ -79,16 +81,16 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-        }
+        
 
     }
 
     private void Shoot()
     {
-        if (!stopShooting)
+        if (isSmartToShoot)
         {
-            Instantiate(bulletPrefabs, shootingPos.position, Quaternion.identity).GetComponent<Bullet>().direction = shootingPos.forward;
+             Instantiate(bulletPrefabs, shootingPos.position, Quaternion.identity).GetComponent<Bullet>().direction = shootingPos.forward;         
         }
-      
+           
     }
 }
