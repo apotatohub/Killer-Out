@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     public Slider healthBar;
+    public Animator hitEffectAnim;
     void Start()
     {
         currentHealth = maxHealth;
@@ -20,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (currentHealth>0)
         {
+            hitEffectAnim.Play("Hit");
             currentHealth -= damageAmmount;
             healthBar.value = currentHealth;
         }

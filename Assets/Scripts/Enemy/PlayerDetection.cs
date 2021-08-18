@@ -54,13 +54,14 @@ public class PlayerDetection : MonoBehaviour
         if (!isDetected)
         {
 			FindPlayer(viewRadius, viewAngle);
-			viewAngleMeshRenderer.material.color = Color.green;
-			
+			viewAngleMeshRenderer.material.color = new Color32(0, 255, 0, 100);  
+
+
 		}
         else
         {
-			
-			viewAngleMeshRenderer.material.color = Color.red;
+
+			viewAngleMeshRenderer.material.color = new Color32(255, 0, 0, 130);
 		}
         if (target)
         {

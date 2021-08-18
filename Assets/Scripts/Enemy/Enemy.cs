@@ -15,9 +15,10 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent navAgent;
     public EnemyCountManager enemyCountManager;
     public Animator anim;
+    public GameObject bloodParticles;
     public float BPS = 3;
     float bulletShootTime;
-    float minimumVelocity=15;
+    float minimumVelocity = 0;
 
     private void Start()
     {
@@ -38,12 +39,13 @@ public class Enemy : MonoBehaviour
         {
             if (!collision.collider.GetComponent<Shield>().isDamaged && !isDead && collision.collider.GetComponent<Shield>().isThrown)
             {
-                if (collision.relativeVelocity.magnitude >= minimumVelocity || true)
+                if (collision.relativeVelocity.magnitude >= minimumVelocity)
                 {
                     if (!GetComponent<Rigidbody>())
                     {
                         gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*30);
                     }
+                    bloodParticles.SetActive(true);
                     CameraShaker.Instance.ShakeOnce(4, 2, 0.1f, 1);
                     isDead = true;
                     collision.collider.GetComponent<Shield>().isDamaged = true;

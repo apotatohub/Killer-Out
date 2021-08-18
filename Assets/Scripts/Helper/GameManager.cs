@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameObject gameoverPanel;
+    public GameObject gameoverPanel,enemyClearEffect;
     private void Awake()
     {
         if (Instance==null)
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameoverPanel.SetActive(true);
+        enemyClearEffect.GetComponent<Animator>().Play("Hit");
     }
 
 }

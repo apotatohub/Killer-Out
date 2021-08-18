@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     private void Start()
     {
         //target = GameObject.FindGameObjectWithTag("Player");
-        offsetZ = 0;
+        //offsetZ = 0;
     }
     void Update()
     {
