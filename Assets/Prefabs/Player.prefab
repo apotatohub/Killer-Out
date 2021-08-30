@@ -2273,7 +2273,7 @@ GameObject:
   - component: {fileID: 4479471498430017293}
   - component: {fileID: 4479471498430017286}
   m_Layer: 8
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2327,7 +2327,7 @@ MonoBehaviour:
   speed: 20
   editorSpeed: 20
   rb: {fileID: 4479471498430017289}
-  RotationSpeed: 5
+  RotationSpeed: 18
   anim: {fileID: 7170218652672546532}
   joystick: {fileID: 0}
   direction: {x: 0, y: 0}
@@ -2365,6 +2365,7 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 0}
+  hitEffectAnim: {fileID: 0}
 --- !u!136 &4479471498430017286
 CapsuleCollider:
   m_ObjectHideFlags: 0

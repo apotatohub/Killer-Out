@@ -19,9 +19,14 @@ public class Enemy : MonoBehaviour
     public float BPS = 3;
     float bulletShootTime;
     float minimumVelocity = 0;
+    Transform player;
+
+    RagdollActivate ragdoll;
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        ragdoll = GetComponentInChildren<RagdollActivate>();
         if (!enemyCountManager)
         {
             enemyCountManager = FindObjectOfType<EnemyCountManager>();
@@ -41,10 +46,7 @@ public class Enemy : MonoBehaviour
             {
                 if (collision.relativeVelocity.magnitude >= minimumVelocity)
                 {
-                    if (!GetComponent<Rigidbody>())
-                    {
-                        gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity*30);
-                    }
+                    
                     bloodParticles.SetActive(true);
                     CameraShaker.Instance.ShakeOnce(4, 2, 0.1f, 1);
                     isDead = true;
@@ -55,9 +57,12 @@ public class Enemy : MonoBehaviour
                     playerDetection.viewMeshFilter.gameObject.SetActive(false);
                     playerDetection.enabled = false;
                     anim.enabled = false;
-                    //Ragdol Enabling Here                  
-                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.gray;
-
+                    //gameObject.AddComponent<Rigidbody>().AddForce(collision.relativeVelocity * 300,ForceMode.Force);
+                    //Ragdol Enabling Here
+                    ragdoll.SetState(true);
+                    //GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.gray;
+                   
+                    
                 }
 
             }
