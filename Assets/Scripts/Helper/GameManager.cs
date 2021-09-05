@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using com.adjust.sdk;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
