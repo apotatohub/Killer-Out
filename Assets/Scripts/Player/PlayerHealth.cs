@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public Animator hitEffectAnim;
     void Start()
     {
+        GameAnalyticsManager_Manual.Instance.OnGameStart((SceneManager.GetActiveScene().buildIndex + 1).ToString());
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = currentHealth;
@@ -28,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
         if(currentHealth<=0)
         {
             //Play Death Animation
+            GameAnalyticsManager_Manual.Instance.OnGameFailed((SceneManager.GetActiveScene().buildIndex+1).ToString());
             GameManager.Instance.GameOver();
             Debug.Log("Player is done playing!!!");
         }

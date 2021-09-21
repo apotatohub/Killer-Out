@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
     public void ReloadGame()
     {
+        GameAnalyticsManager_Manual.Instance.OnGameRestart((SceneManager.GetActiveScene().buildIndex + 1).ToString());
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void NextLevel()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemyCountManager : MonoBehaviour
@@ -19,6 +20,7 @@ public class EnemyCountManager : MonoBehaviour
        
         if (enemyCount<=0)
         {
+            GameAnalyticsManager_Manual.Instance.OnGameSucceed((SceneManager.GetActiveScene().buildIndex + 1).ToString());
             GameManager.Instance.GameOver();           
         }
         

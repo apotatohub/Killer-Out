@@ -1,7 +1,4 @@
 ﻿using com.adjust.sdk;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AdjustSdkManager_manual : MonoBehaviour
@@ -9,7 +6,7 @@ public class AdjustSdkManager_manual : MonoBehaviour
     public static AdjustSdkManager_manual Instance;
     public string appToken = "{Your App Token}";
     public LogEventWithToken[] logEvents;
-    void Awake()
+    void Start()
     {
         if (Instance==null)
         {
@@ -28,6 +25,7 @@ public class AdjustSdkManager_manual : MonoBehaviour
         AdjustConfig config = new AdjustConfig(appToken, environment, true);
         config.setLogLevel(AdjustLogLevel.Suppress);
         Adjust.start(config);
+        DontDestroyOnLoad(this.gameObject);
     }
 
  

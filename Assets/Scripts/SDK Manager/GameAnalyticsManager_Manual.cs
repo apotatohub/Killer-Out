@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameAnalitycsManager_Manual : MonoBehaviour, IGameAnalyticsATTListener
+public class GameAnalyticsManager_Manual : MonoBehaviour, IGameAnalyticsATTListener
 {
-    public static GameAnalitycsManager_Manual Instance;
+    public static GameAnalyticsManager_Manual Instance;
 
-    private void Awake()
+    private void Start()
     {
         if (Instance==null)
         {
@@ -26,6 +26,7 @@ public class GameAnalitycsManager_Manual : MonoBehaviour, IGameAnalyticsATTListe
         {
             GameAnalytics.Initialize();                                                                              
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void GameAnalyticsATTListenerNotDetermined()
@@ -57,8 +58,8 @@ public class GameAnalitycsManager_Manual : MonoBehaviour, IGameAnalyticsATTListe
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Level_Num", levelNumber);
     }
-    public void OnGameEnd(string levelNumber)
+    public void OnGameRestart(string levelNumber)
     {
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Level_Num", levelNumber);
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "Level_Num", levelNumber+"Restarted");
     }
 }
