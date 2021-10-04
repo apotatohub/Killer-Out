@@ -30,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
         {
             //Play Death Animation
             GameAnalyticsManager_Manual.Instance.OnGameFailed((SceneManager.GetActiveScene().buildIndex+1).ToString());
-            GameManager.Instance.GameOver();
+            GameManagement.Instance.GameOver();
             Debug.Log("Player is done playing!!!");
         }
     }

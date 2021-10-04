@@ -8,6 +8,7 @@ public class AdjustSdkManager_manual : MonoBehaviour
     public LogEventWithToken[] logEvents;
     void Start()
     {
+        
         if (Instance==null)
         {
             Instance = this;
@@ -20,8 +21,7 @@ public class AdjustSdkManager_manual : MonoBehaviour
         {
             return;
         }
-        DontDestroyOnLoad(transform.gameObject);
-        AdjustEnvironment environment = AdjustEnvironment.Sandbox;
+        AdjustEnvironment environment = AdjustEnvironment.Production;
         AdjustConfig config = new AdjustConfig(appToken, environment, true);
         config.setLogLevel(AdjustLogLevel.Suppress);
         Adjust.start(config);

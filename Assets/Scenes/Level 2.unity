@@ -1289,21 +1289,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1306377229}
-    - target: {fileID: 4045485861006298776, guid: 14c7a7ac86a359940b55cfaec0582f02,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReloadGame
-      objectReference: {fileID: 0}
     - target: {fileID: 4045485861126259708, guid: 14c7a7ac86a359940b55cfaec0582f02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1306377229}
-    - target: {fileID: 4045485861126259708, guid: 14c7a7ac86a359940b55cfaec0582f02,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NextLevel
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14c7a7ac86a359940b55cfaec0582f02, type: 3}
 --- !u!224 &695103445 stripped
